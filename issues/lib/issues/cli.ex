@@ -11,6 +11,14 @@ defmodule Issues.CLI do
     |> parse_args()
     |> process()
     |> decode_response()
+    |> sort_in_descending_order()
+  end
+
+  def sort_in_descending_order(list_of_issues) do
+    list_of_issues
+    |> Enum.sort(fn i1, i2 ->
+      i1["created_at"] >= i2["created_at"]
+    end)
   end
 
   def decode_response({:ok, body}), do: body
